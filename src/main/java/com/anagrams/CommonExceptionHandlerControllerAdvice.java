@@ -33,25 +33,25 @@ public class CommonExceptionHandlerControllerAdvice extends ResponseEntityExcept
 	}
 
 	@Override
-	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
-			HttpStatus status, WebRequest request) {
+	protected ResponseEntity handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status,
+			WebRequest request) {
 		String error = "No handler found for " + ex.getHttpMethod() + " " + ex.getRequestURL();
-		return new ResponseEntity<Object>(error, new HttpHeaders(), HttpStatus.NOT_FOUND);
+		return new ResponseEntity(error, new HttpHeaders(), HttpStatus.NOT_FOUND);
 	}
 
 	@Override
-	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
+	protected ResponseEntity handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers,
+			HttpStatus status, WebRequest request) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(ex.getMethod());
 		builder.append(" method is not supported for this request. Supported methods are ");
 		ex.getSupportedHttpMethods().forEach(t -> builder.append(t + " "));
-		return new ResponseEntity<Object>(builder.toString(), new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
+		return new ResponseEntity(builder.toString(), new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
 	}
 
 	@ExceptionHandler({ Exception.class })
 	public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
-		return new ResponseEntity<Object>(ex.getLocalizedMessage(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity(ex.getLocalizedMessage(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

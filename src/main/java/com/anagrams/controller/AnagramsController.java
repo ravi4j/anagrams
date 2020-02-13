@@ -18,13 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Validated
 public class AnagramsController {
+	private static final String NON_ALPHA_MESSAGE = "Contains non-alpha character.Only alphabets are allowed [A-Za-z].";
 
 	@Autowired
 	IAnagramService service;
 
 	@RequestMapping(value = "/anagrams/{string1}/{string2}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map areAnagrams(@PathVariable @Pattern(regexp = "^[A-Za-z]+$", message = "Only Letters are allowed") String string1,
-			@PathVariable @Pattern(regexp = "^[A-Za-z]+$", message = "Only Letters are allowed") String string2) {
+	public Map areAnagrams(@PathVariable @Pattern(regexp = "^[A-Za-z]+$", message = NON_ALPHA_MESSAGE) String string1,
+			@PathVariable @Pattern(regexp = "^[A-Za-z]+$", message = NON_ALPHA_MESSAGE) String string2) {
 		return Collections.singletonMap("areAnagrams", service.isAnagram(string1, string2));
 	}
 

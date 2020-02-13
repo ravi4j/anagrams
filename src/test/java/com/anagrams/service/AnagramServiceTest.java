@@ -1,58 +1,97 @@
 package com.anagrams.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.util.Assert;
 
 public class AnagramServiceTest {
 
-	private IAnagramService service = new AnagramService();
+	private AnagramService service = new AnagramService();
 
 	@Test
-	public void testIsAnagramWithNulls(){
+	public void testIsAnagramWithNulls() {
 		boolean isAnagram = service.isAnagram(null, null);
-		Assert.isTrue(isAnagram == false, "Not Anagrams");
+		Assertions.assertFalse(isAnagram, "Not Anagrams");
 	}
 
 	@Test
-	public void testIsAnagramWithFirstWordAsNull(){
+	public void testIsAnagramWithFirstWordAsNull() {
 		boolean isAnagram = service.isAnagram(null, "Hello");
-		Assert.isTrue(isAnagram == false, "Not Anagrams");
+		Assertions.assertFalse(isAnagram, "Not Anagrams");
 	}
 
 	@Test
-	public void testIsAnagramWithSecondWordAsNull(){
+	public void testIsAnagramWithWordWithSpaces() {
+		boolean isAnagram = service.isAnagram("    hello     ", " Hello ");
+		Assertions.assertTrue(isAnagram, "Anagrams");
+	}
+
+	@Test
+	public void testIsAnagramWithSecondWordAsNull() {
 		boolean isAnagram = service.isAnagram("Hello", null);
-		Assert.isTrue(isAnagram == false, "Not Anagrams");
+		Assertions.assertFalse(isAnagram, "Hello and null word2  are not Anagrams");
 	}
 
 	@Test
-	public void testIsAnagramWithDifferentLengthWords(){
+	public void testIsAnagramWithDifferentLengthWords() {
 		boolean isAnagram = service.isAnagram("Hello", "helloWorld");
-		Assert.isTrue(isAnagram == false, "Not Anagrams");
+		Assertions.assertFalse(isAnagram, "Hello and helloWorld are not Anagrams");
 	}
 
 	@Test
 	public void testIsAnagramUpperCase() {
 		boolean isAnagram = service.isAnagram("Hello", "hello");
-		Assert.isTrue(isAnagram == true, "'Hello' and 'hello' are  Anagrams");
+		Assertions.assertTrue(isAnagram, "'Hello' and 'hello' are  Anagrams");
 	}
 
 	@Test
 	public void testIsAnagramWithWordAnagram() {
 		boolean isAnagram = service.isAnagram("anagram", "margana");
-		Assert.isTrue(isAnagram == true, "'anagram' and 'margana' are Anagrams");
+		Assertions.assertTrue(isAnagram, "'anagram' and 'margana' are Anagrams");
 	}
 
 	@Test
 	public void testIsAnagramEqualLengthWithExtraCharacter() {
 		boolean isAnagram = service.isAnagram("anagramm", "marganaa");
-		Assert.isTrue(isAnagram == false, "'anagramm' and 'marganaa' are Not Anagrams");
+		Assertions.assertFalse(isAnagram , "'anagramm' and 'marganaa' are Not Anagrams");
 	}
 
 	@Test
 	public void testIsAnagramEqualLengthDifferentWords() {
 		boolean isAnagram = service.isAnagram("bbcc", "dabc");
-		Assert.isTrue(isAnagram == false, "bbcc and dabc are Not Anagrams");
+		Assertions.assertFalse(isAnagram, "bbcc and dabc are Not Anagrams");
+	}
+
+	@Test
+	public void testIsAnagramWithAlphaNumericFirstWords() {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			service.isAnagram("anagra)", "margan)");
+		});
+	}
+
+	@Test
+	public void testIsAnagramWithAlphaNumericSecondWords() {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			service.isAnagram("hello", "hel1o");
+		});
+	}
+
+	@Test
+	public void testIsAnagramWithAlphaNumericBothWords() {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			service.isAnagram("anagraO", "margan0");
+		});
+	}
+
+	@Test
+	public void testIsAlphaForAlphaWord() {
+		boolean isAlpha = service.isAlpha("Hello");
+		Assertions.assertTrue(isAlpha, "Is Hello is Alpha ?");
+	}
+
+	@Test
+	public void testIsAlphaForAlphaNumericWord() {
+		boolean isAlpha = service.isAlpha("Hello123");
+		Assertions.assertFalse(isAlpha, "Is Hello123 is Alpha ?");
 	}
 
 }

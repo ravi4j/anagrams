@@ -40,7 +40,15 @@ public class CommonExceptionHandlerControllerAdviceTest {
 
 	@Test
 	public void whenServerInternalErrorForHttpRequest_thenInternalError() throws Exception {
-		doThrow(new RuntimeException("Exception...")).when(service).isAnagram(anyString() , anyString());
+		doThrow(new RuntimeException("RuntimeException...")).when(service).isAnagram(anyString() , anyString());
+		String url = URL_PREFIX + "/string/string";
+		this.mockMvc.perform(get(url)).andExpect(status().isInternalServerError()).andExpect(
+				content().string(containsString("Exception...")));
+	}
+
+	@Test
+	public void whenServerIllegalArgumentExceptionForHttpRequest_thenInternalError() throws Exception {
+		doThrow(new IllegalArgumentException("IllegalArgumentException...")).when(service).isAnagram(anyString() , anyString());
 		String url = URL_PREFIX + "/string/string";
 		this.mockMvc.perform(get(url)).andExpect(status().isInternalServerError()).andExpect(
 				content().string(containsString("Exception...")));

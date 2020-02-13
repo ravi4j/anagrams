@@ -5,3 +5,6 @@
 
     ### Api Endpoint( method = GET ) 
     ####/anagrams/{string1}/{string2}
+    
+    ### Run Test ( required Maven 3)
+        mvn test  
