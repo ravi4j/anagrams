@@ -1,13 +1,28 @@
 # Anagram Rest API  
 @Author ravi4j
 
-  ### Spring Boot and Java 8
+      
 
-    ### Api Endpoint( method = GET ) 
-        /anagrams/{string1}/{string2}
+  ### Spring Boot and Java 8
+  
+   ### Api Endpoint( method = GET ) 
+          /anagrams/{string1}/{string2}
+          
+    Clone Repository
+         https://github.com/ravi4j/anagrams.git
     
+    Inside clone folder
         Run Test ( required Maven 3)
-        mvn test  
+            mvn test  
+        
+      
+        Run Application
+            mvn clean install
+            java -jar target/com.anagrams-1.0-SNAPSHOT.jar
+           
+           Access Application 
+                http://localhost:8080/anagrams/DAS/SAD
+              
         
         1. Anagram Service 
             AnagrameService - Implements the algorithm to test anagrams words
