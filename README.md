@@ -5,8 +5,7 @@
 
   ### Spring Boot and Java 8
   
-   ### Api Endpoint( method = GET ) 
-          /anagrams/{string1}/{string2}
+    Api Endpoint (method = GET) /anagrams/{string1}/{string2}
           
     Clone Repository
          https://github.com/ravi4j/anagrams.git
